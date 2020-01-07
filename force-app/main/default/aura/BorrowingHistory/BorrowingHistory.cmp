@@ -1,0 +1,35 @@
+<aura:component controller="BorrowItemsController" implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <!-- Attributes -->
+    <aura:attribute name="employeeId" type="String" />
+    <aura:attribute name="isReturn" type="boolean" />
+    <aura:attribute name="borrowingHistory" type="Borrowing_History__c[]" access="private"/>
+    <aura:attribute name="columns" type="List"  access="private"/>
+    <aura:attribute name="selectedRows" type="List" access="private"/>
+    <!-- Handler -->
+    <aura:handler name="init" value="{! this }" action="{! c.doinit }"/>
+    <!-- Method -->
+    <aura:method name="reload" action="{! c.doinit }"/>
+    <!-- Borrowing History Table -->
+    <lightning:card title="Existing Issued Items" >
+        <aura:set attribute="actions">
+            <aura:if isTrue="{! and( v.isReturn, v.borrowingHistory.length > 0 )}">
+                <lightning:button label="Return" onclick="{!c.handleReturn}"/>
+                <!--<lightning:button label="Re-Issue" onclick="{!c.handleReissue}"/>-->
+            </aura:if>
+        </aura:set>
+        <aura:if isTrue="{!v.borrowingHistory.length > 0 }">
+            <lightning:datatable hideCheckboxColumn="{! !v.isReturn }"
+                                 keyField="id"
+                                 data="{! v.borrowingHistory }"
+                                 columns="{! v.columns }"
+                                 aura:id="borrowingHistory"/>
+            
+            <aura:set attribute="else">
+                <lightning:tile>
+                    <p class="slds-p-around_small" title="No records found">No records found</p>
+                </lightning:tile>
+            </aura:set>
+            
+        </aura:if>
+    </lightning:card>
+</aura:component>

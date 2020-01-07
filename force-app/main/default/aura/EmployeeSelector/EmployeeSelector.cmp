@@ -1,0 +1,23 @@
+<aura:component >
+    <!-- Atribute -->
+    <aura:attribute name="employeeId" type="String"/>
+    <aura:attribute name="parent" type="Aura.component" required="true"/>
+    <!-- Component Content -->
+    <lightning:card title="SELECT EMPLOYEE" class="slds-p-around_xxx-small">
+        <aura:set attribute="actions">
+            <aura:if isTrue="{!v.employeeId != NULL}">
+                <lightning:button label="Change Employee" onclick="{!c.handleChangeEmployee}"/>
+            </aura:if>
+        </aura:set>
+        <p class="slds-p-horizontal_small">
+            <lightning:recordEditForm aura:id="recordViewForm"
+                                      recordId=""
+                                      objectApiName="Borrowing_History__c"
+                                      onload="{!c.handleLoad}"
+                                      >
+                <lightning:messages />
+                <lightning:inputField aura:id="employeeId" fieldName="Employee__c" onchange="{!c.handleEmployeeChange}"/>
+            </lightning:recordEditForm>
+        </p>
+    </lightning:card>
+</aura:component>

@@ -1,0 +1,59 @@
+<aura:component controller="BorrowItemsController">
+    <!-- Attributes -->
+    <aura:attribute name="showBrowseItem" type="boolean" />
+    <aura:attribute name="items" type="Item__c[]"/>
+    <aura:attribute name="pendingItems" type="Set"/>
+    <aura:attribute name="searchedItems" type="Item__c[]" access="PRIVATE"/>
+    <aura:attribute name="columns" type="LIST" access="PRIVATE"/>
+	<!-- Handler -->
+    <aura:handler name="init" action="{!c.doinit}" value="{!this}"/>
+    
+    <lightning:button label="Browse Items" onclick="{! c.handleBrowse }"/>
+    <!-- Modal Content -->
+    <aura:if isTrue="{! v.showBrowseItem }">
+        <section role="dialog" tabindex="-1" class="slds-modal slds-fade-in-open slds-modal_medium" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1">
+            <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                    <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close">
+                        <lightning:icon iconName="utility-sprite:close"/>
+                        <!--<svg class="slds-button__icon slds-button__icon_large" aria-hidden="true">
+                        <use xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#close"></use>
+                    </svg>-->
+                        <span class="slds-assistive-text">Close</span>
+                    </button>
+                    <h2 id="browseItem-heading" class="slds-modal__title slds-hyphenate">Browse Items</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="browseItem-content">
+                    <lightning:layout>
+                        <lightning:layoutItem size="6">
+                            <lightning:input label="Search Keyword" type="search" required="true" aura:id="searchKeyword"/> 
+                        </lightning:layoutItem>
+                        <lightning:layoutItem size="6" class="slds-p-around_large">
+                            <lightning:button label="Search" onclick="{! c.handleSearch }"/>
+                        </lightning:layoutItem>
+                        
+                    </lightning:layout>
+                    <!-- Search Result -->
+                    <lightning:card title="Search Result">
+                        <aura:if isTrue="{! v.searchedItems.length > 0 }">
+                            <lightning:datatable keyField="id"
+                                                 data="{!v.searchedItems}"
+                                                 columns="{! v.columns }"
+                                                 hideCheckboxColumn="true"
+                                                 onrowaction="{!c.handleRowAction}"/>
+                            <aura:set attribute="else">
+                                <lightning:tile>
+                                    <p class="slds-p-around_small" title="No records found">No records found</p>
+                                </lightning:tile>
+                            </aura:set>
+                        </aura:if>
+                    </lightning:card>
+                </div>
+                <footer class="slds-modal__footer">
+                    <lightning:button onclick="{! c.handleCancel }" label="Cancel"/>
+                </footer>
+            </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>	
+    </aura:if>
+</aura:component>

@@ -1,0 +1,62 @@
+<aura:component implements="force:appHostable" controller="BorrowItemsController">
+    <!-- Attributes -->
+    <aura:attribute name="items" type="Item__c[]"/>
+    <aura:attribute name="pendingItems" type="Set" default="[]"/>
+    <aura:attribute name="employeeId" type="String"/>
+    <aura:attribute name="columns" type="List" />
+    <!-- Handler -->
+    <aura:handler name="init" action="{!c.doinit}" value="{!this}"/>
+    <!-- Parent Method/Alternatively we can use component Event -->
+    <aura:method name="removeEmployee" action="{!c.removeEmployee}"/>
+    <!-- Page Header -->
+    <c:LightningHeader title="Borrow Items" 
+                       subTitle="Books/Av Equipments"
+                       iconName="custom:custom93" 
+                       iconClass="slds-icon_container slds-icon-custom-custom12"/>
+    <!-- Page Content -->
+    <lightning:layout >
+        <lightning:layoutItem class="slds-p-around_xxx-small" size="6">
+            <c:EmployeeSelector employeeId="{!v.employeeId}" parent="{! this }"/>
+        </lightning:layoutItem>
+        <aura:if isTrue="{!v.employeeId != NULL}">
+            <lightning:layoutItem class="slds-p-around_xxx-small" size="6">
+                <lightning:card title="ENTER ITEM CODE">
+                    <aura:set attribute="actions">
+                    	<c:BrowseItems items="{! v.items }" pendingItems="{! v.pendingItems }"/>
+                    </aura:set>
+                    <p class="slds-p-horizontal_small">
+                        <div onkeyup="{! c.handleAddItem }">
+                            <lightning:input 
+                                             aura:id="itemCode"
+                                             label="Item Code"
+                                             type="search"
+                                             />
+                        </div>
+                    </p>
+                </lightning:card>
+            </lightning:layoutItem>
+        </aura:if>
+    </lightning:layout>
+    
+    <lightning:layout>
+        <lightning:layoutItem size="6" >
+            <aura:if isTrue="{!v.items.length > 0 }">
+                <lightning:card title="Check-out Items">
+                    <aura:set attribute="actions">
+                        <lightning:button label="Check-out" onclick="{!c.handleCheckOut}"/>
+                    </aura:set>
+                    <lightning:datatable
+                                         keyField="id"
+                                         data="{!v.items}"
+                                         columns="{! v.columns }"
+                                         hideCheckboxColumn="true"/>
+                </lightning:card>
+            </aura:if>
+        </lightning:layoutItem>
+        <lightning:layoutItem size="6" >
+            <aura:if isTrue="{!v.employeeId != NULL}">
+                <c:BorrowingHistory employeeId="{!v.employeeId}" aura:id="borrowingHistory"/>
+            </aura:if>
+        </lightning:layoutItem>
+    </lightning:layout>
+</aura:component>

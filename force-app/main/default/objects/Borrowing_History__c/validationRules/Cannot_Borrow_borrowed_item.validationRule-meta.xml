@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ValidationRule xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>Cannot_Borrow_borrowed_item</fullName>
+    <active>true</active>
+    <errorConditionFormula>ISPICKVAL(Item__r.Status__c, &#39;Borrowed&#39;)&amp;&amp;  ISNULL(Return_Date__c )</errorConditionFormula>
+    <errorMessage>You cannot borrow this item as this is unavailable at the moment</errorMessage>
+</ValidationRule>

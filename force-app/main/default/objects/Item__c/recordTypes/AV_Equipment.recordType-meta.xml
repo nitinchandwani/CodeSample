@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RecordType xmlns="http://soap.sforce.com/2006/04/metadata">
+    <fullName>AV_Equipment</fullName>
+    <active>true</active>
+    <label>AV Equipment</label>
+    <picklistValues>
+        <picklist>Status__c</picklist>
+        <values>
+            <fullName>Available</fullName>
+            <default>false</default>
+        </values>
+        <values>
+            <fullName>Borrowed</fullName>
+            <default>false</default>
+        </values>
+    </picklistValues>
+</RecordType>

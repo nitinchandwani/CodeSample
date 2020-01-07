@@ -1,0 +1,17 @@
+<aura:component implements="force:appHostable,flexipage:availableForRecordHome,force:hasRecordId" access="global" >
+    <aura:attribute name="recordId" type="String"/>
+    <!-- Parent Method/Alternatively we can use component Event -->
+    <aura:method name="removeEmployee" action="{!c.removeEmployee}"/>
+    <!-- Page Header -->
+    <c:LightningHeader title="Return Items" 
+                       subTitle="Books/Av Equipments"
+                       iconName="standard:return_order" 
+                       iconClass="slds-icon_container slds-icon-custom-custom12"/>
+    <!-- Select Emplpyee -->
+    <c:EmployeeSelector employeeId="{!v.recordId}" parent="{! this }"/>
+    <aura:if isTrue="{!v.recordId != NULL }">
+        <c:BorrowingHistory employeeId="{!v.recordId}" isReturn="true" aura:id="borrowingHistory"/>
+    </aura:if>
+    
+    
+</aura:component>

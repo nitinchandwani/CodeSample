@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CustomObjectTranslation xmlns="http://soap.sforce.com/2006/04/metadata">
+    <caseValues>
+        <plural>false</plural>
+        <value>Borrowing History</value>
+    </caseValues>
+    <caseValues>
+        <plural>true</plural>
+        <value>Borrowing Histories</value>
+    </caseValues>
+    <layouts>
+        <layout>Borrowing History Layout</layout>
+        <sections>
+            <label><!-- Custom Links --></label>
+            <section>Custom Links</section>
+        </sections>
+    </layouts>
+    <startsWith>Consonant</startsWith>
+    <validationRules>
+        <errorMessage><!-- You cannot borrow this item as this is unavailable at the moment --></errorMessage>
+        <name>Cannot_Borrow_borrowed_item</name>
+    </validationRules>
+</CustomObjectTranslation>
